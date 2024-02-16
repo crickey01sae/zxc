@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday!</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        text-align: center;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .container p {
+        font-size: 16px;
+      }
+      .hidden {
+        display: none;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #ff6666;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #ff4d4d;
+      }
+
+      #giftBox {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      #giftBox img {
+        width: 100px;
+        cursor: pointer;
+      }
+
+      .card {
+        width: 200px;
+        height: 225px;
+        margin: 20px auto;
+        perspective: 1000px;
+      }
+
+      .card-inner {
+        width: 100%;
+        height: 50%;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
+
+      .card:hover .card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .card .front,
+      .card .back {
+        width: 100%;
+        position: absolute;
+        backface-visibility: hidden;
+      }
+      .card .front img {
+        width: 100%;
+      }
+      .card .back img {
+        width: 100%;
+        height: 100%;
+      }
+
+      .card .back {
+        transform: rotateY(180deg);
+      }
+
+      .confetti-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      .confetti {
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        position: absolute;
+        top: 0;
+        animation: confetti-fall 5s linear infinite;
+      }
+
+      #giftBox img {
+        margin-bottom: 11px;
+      }
+      #giftBox button {
+        padding: 8px;
+        border-radius: 11px;
+        border: 1px solid #ff4d4d;
+        display: block;
+        margin: 0 auto;
+      }
+      #siuu img {
+        width: 100%;
+      }
+      #siuu p {
+        font-size: 20px;
+      }
+      @keyframes confetti-fall {
+        0% {
+          transform: translateY(0) rotateZ(0);
+        }
+        100% {
+          transform: translateY(100vh) rotateZ(720deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="main">
+        <h1>Happy Birthday!</h1>
+        <p>SHERNI 😼,</p>
+        <p>Wishing you a day filled with love, joy, and lots of fun!</p>
+        <div id="birthdayCard" class="card">
+          <div class="card-inner">
+            <div class="front">
+              <img
+                id="frontImage"
+                src="img/Picture 2.jpg"
+                alt="Front of Birthday Card" />
+            </div>
+            <div class="back">
+              <img
+                id="backImage"
+                src="img/images.jpeg"
+                alt="Back of Birthday Card" />
+            </div>
+          </div>
+        </div>
+        <h3>Don't click neeche wala button</h3>
+        <button id="giftButton">
+          Sherni dheet hai mnaa krne prr bhi woh ye button dabayegi
+        </button>
+        <div id="giftBox" class="hidden">
+          <img src="img/cheems.png" alt="Gift" />
+          <button>Sherni ko yha bhi click krna hoga to reveal surprise!</button>
+        </div>
+      </div>
+      <div id="siuu" class="hidden">
+        <img src="img/middle.avif" alt="Gift" />
+        <p>Sherni ko bevkoof bnaya gya!!</p>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const giftButton = document.getElementById("giftButton");
+        const giftBox = document.getElementById("giftBox");
+        const frontImage = document.getElementById("frontImage");
+        const backImage = document.getElementById("backImage");
+        const middle = document.getElementById("siuu");
+        const mainDiv = document.querySelector(".main");
+
+        giftButton.addEventListener("click", function () {
+          giftBox.classList.remove("hidden");
+        });
+
+        const confettiContainer = document.createElement("div");
+        confettiContainer.classList.add("confetti-container");
+        document.body.appendChild(confettiContainer);
+
+        function startConfetti() {
+          for (let i = 0; i < 100; i++) {
+            const confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.left = Math.random() * window.innerWidth + "px";
+            confetti.style.animationDelay = Math.random() * 5 + "s";
+            confettiContainer.appendChild(confetti);
+          }
+        }
+
+        giftBox.addEventListener("click", function () {
+          startConfetti();
+          mainDiv.classList.add("hidden");
+          middle.classList.remove("hidden");
+
+          setTimeout(function () {
+            alert("Siuuuuuuuuuuuuuuuuuu🎉");
+            giftBox.innerHTML = "<p>Happy Birthday! 🎂</p>";
+          }, 2000);
+        });
+
+        const card = document.querySelector(".card-inner");
+        let isFlipped = false;
+
+        function flipCard() {
+          card.style.transform = isFlipped ? "rotateY(0)" : "rotateY(180deg)";
+          isFlipped = !isFlipped;
+        }
+
+        setInterval(flipCard, 3000);
+      });
+    </script>
+  </body>
+</html>
